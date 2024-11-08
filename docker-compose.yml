@@ -1,23 +1,20 @@
-# vim: set ts=2 sw=2 ai si et:
----
-
-version: '3'
-
 services:
   web:
-    image: nginx:latest
+    image: caddy:latest
     restart: 'always'
     container_name: invoiceninja_web
     depends_on:
       - app
+      - phpmyadmin
     env_file: .env
     volumes:
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
-      - './vhost.conf:/etc/nginx/conf.d/in-vhost.conf:ro'
+      - './Caddyfile:/etc/caddy/Caddyfile'
       - '$INVOICE_NINJA_HOME/public:/var/www/app/public:ro'
     ports:
-      - '127.0.0.1:8082:80'
+      - '80:80'
+      - '443:443'
     networks:
       - invoiceninja
 
@@ -52,8 +49,6 @@ services:
     restart: 'always'
     container_name: 'invoiceninja_dbadmin'
     env_file: .env
-    ports:
-      - '127.0.0.1:8000:80'
     networks:
       - invoiceninja
     environment:
