@@ -8,8 +8,8 @@ services:
       - phpmyadmin
     env_file: .env
     volumes:
-      - '/etc/timezone:/etc/timezone:ro'
-      - '/etc/localtime:/etc/localtime:ro'
+      #- '/etc/timezone:/etc/timezone:ro'
+      #- '/etc/localtime:/etc/localtime:ro'
       - './Caddyfile:/etc/caddy/Caddyfile'
       - '$INVOICE_NINJA_HOME/public:/var/www/app/public:ro'
     ports:
